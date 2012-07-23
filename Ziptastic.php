@@ -20,7 +20,7 @@ class Ziptastic implements JsonSerializable {
 	private function returnError ($message, $code) {
 		$this->error = $message;
 		$this->error_code = $code;		
-		return false;
+		return $this;
 	}
 	public function lookup ($zip) {
 		$this->reset();
