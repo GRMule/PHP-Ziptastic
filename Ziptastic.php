@@ -1,50 +1,45 @@
 <?php
 class Ziptastic implements JsonSerializable {
+	const API_URL = 'http://zip.elevenbasetwo.com/?zip=';
 	private $url = 'http://zip.elevenbasetwo.com/?zip=';
 	public $city = null;
 	public $state = null;
 	public $zip = null;
 	public $error = false;
-	private $error_code = false;
 	public function __construct ($zip=false) {
 		if ($zip)
 			$this->lookup($zip);
 	}
-	private function reset() {
+	private function returnError ($message) {
+		$this->error = $message;
+		return $this;
+	}
+	public function lookup ($zip) {
 		$this->city = null;
 		$this->state = null;
 		$this->zip = null;
 		$this->error = false;
-		$this->error_code = false;
-	}
-	private function returnError ($message, $code) {
-		$this->error = $message;
-		$this->error_code = $code;		
-		return $this;
-	}
-	public function lookup ($zip) {
-		$this->reset();
 
 		$zip = trim(preg_replace('([^0-9-\s])', '-', $zip));
 		$zip = preg_replace('([\s\+,])', '-', $zip);
 
 		if (strlen($zip) < 5)
-			return $this->returnError('Zip code too short', 1);
+			return $this->returnError('Zip code too short');
 
 		$parts = explode('-', $zip);
 		if (count($parts) > 2)
-			return $this->returnError('Malformed zip code', 2);
+			return $this->returnError('Malformed zip code');
 
 		if (!is_numeric($parts[0]))
-			return $this->returnError('Non-numeric zip code', 3);
+			return $this->returnError('Non-numeric zip code');
 
-		$result = @file_get_contents($this->url.$parts[0]);
+		$result = @file_get_contents(self::API_URL.$parts[0]);
 		if (!$result)
-			return $this->returnError('Invalid zip code', 4);
+			return $this->returnError('Invalid zip code');
 
 		$result = @json_decode($result, true);
 		if (!$result)
-			return $this->returnError('Invalid zip code', 5);
+			return $this->returnError('Invalid zip code');
 
 		$this->zip = $parts[0];
 		$this->state = strtoupper($result['state']); 
