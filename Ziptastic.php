@@ -1,6 +1,6 @@
 <?php
 class Ziptastic implements JsonSerializable {
-	const API_URL = 'http://zip.elevenbasetwo.com/?zip=';
+	const API_URL = 'http://zip.getziptastic.com/v2/US/';
 	public $city = null;
 	public $state = null;
 	public $zip = null;
