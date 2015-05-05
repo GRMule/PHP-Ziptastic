@@ -8,7 +8,7 @@
 		public $zip = null;
 		public $error = false;
 
-		private $full_return = null;
+		private $full_return = array();
 		private $exceptionOnError = false;
 		private $endpointOverride = null;
 
@@ -59,7 +59,7 @@
 			$this->state = null;
 			$this->zip = null;
 			$this->error = false;
-			$this->full_return = null;
+			$this->full_return = array();
 		}
 		private function parseAndValidate($zip) {
 			// remove non-numeric, add hyphens for spaces
