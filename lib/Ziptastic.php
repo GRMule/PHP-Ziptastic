@@ -41,7 +41,7 @@
 		public function __toString () {
 			if (is_null($this->zip))
 				return '';
-			return $this->city.', '.strtoupper(substr($this->state, 0, 2));
+			return $this->city.', '.strtoupper(substr($this->full_return['state_short'], 0, 2));
 		}
 		public function jsonSerialize() {
 			return $this->full_return;
