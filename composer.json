@@ -1,5 +1,5 @@
 {
-    "name": "GRMule/PHP-Ziptastic",
+    "name": "grmule/php-ziptastic",
     "type": "library",
     "description": "A simple class for accessing the Ziptastic API (https://www.getziptastic.com/)",
     "keywords": ["zip","postal","ziptastic"],
